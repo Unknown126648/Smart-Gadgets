@@ -1,0 +1,77 @@
+﻿<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <title>Каталог товарів</title>
+    <style>
+        body { font-family: Arial; padding: 20px; background: #f5f5f5; }
+        .container { max-width: 900px; margin: auto; }
+        .product {
+            background: white;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-radius: 8px;
+            box-shadow: 0 0 5px rgba(0,0,0,0.1);
+        }
+        .product h3 { margin: 0; }
+        .product p { margin: 5px 0; }
+        .btn {
+            display: inline-block;
+            background: #007bff;
+            color: white;
+            padding: 7px 12px;
+            text-decoration: none;
+            border-radius: 5px;
+            margin-top: 8px;
+        }
+        .menu {
+            margin-bottom: 20px;
+            padding: 10px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 0 5px rgba(0,0,0,0.1);
+        }
+        .menu a { margin-right: 10px; }
+    </style>
+</head>
+
+<body>
+<div class="container">
+
+    <div class="menu">
+        <a href="/">Головна</a>
+        <a href="/cart">Кошик</a>
+
+        {% if session.get('user_id') %}
+            <a href="/logout">Вихід</a>
+        {% else %}
+            <a href="/login">Вхід</a>
+            <a href="/register">Реєстрація</a>
+        {% endif %}
+
+        {% if session.get('is_admin') %}
+            <a href="/admin">Адмін</a>
+        {% endif %}
+    </div>
+
+    <h1>Каталог розумних гаджетів</h1>
+
+    {% if products %}
+        {% for product in products %}
+            <div class="product">
+                <h3>{{ product.name }}</h3>
+                <p>Ціна: <b>{{ product.price }} грн</b></p>
+                <p>{{ product.description[:100] if product.description else ""}}...</p>
+
+            
+                <a class="btn" href="/product/{{ product.id }}">Переглянути</a>
+                <a class="btn btn-green" href="/cart/add/{{ product.id }}">В кошик</a>
+            </div>
+        {% endfor %}
+    {% else %}
+         <p>Немає товарів.</p>
+    {% endif %}
+
+</div>
+</body>
+</html>

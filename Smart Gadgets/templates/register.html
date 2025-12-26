@@ -1,0 +1,98 @@
+﻿<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <title>Реєстрація</title>
+    <style>
+        body { font-family: Arial; padding: 20px; background: #f5f5f5; }
+        .container { max-width: 400px; margin: auto; }
+        .menu {
+            margin-bottom: 20px;
+            padding: 10px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 0 5px rgba(0,0,0,0.1);
+        }
+        .menu a { margin-right: 10px; }
+
+        .box {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 5px rgba(0,0,0,0.1);
+        }
+
+        .input {
+            width: 100%;
+            padding: 10px;
+            margin: 8px 0;
+            box-sizing: border-box;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 10px;
+            background: green;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            margin-top: 10px;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            background: #007b00;
+        }
+
+        .small {
+            margin-top: 10px;
+            text-align: center;
+        }
+
+        .small a {
+            color: #007bff;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="menu">
+        <a href="/">Головна</a>
+        <a href="/cart">Кошик</a>
+
+        {% if session.get('user_id') %}
+            <a href="/logout">Вихід</a>
+        {% else %}
+            <a href="/login">Вхід</a>
+            <a href="/register">Реєстрація</a>
+        {% endif %}
+
+        {% if session.get('is_admin') %}
+            <a href="/admin">Адмін</a>
+        {% endif %}
+    </div>
+
+    <div class="box">
+        <h2>Створення акаунта</h2>
+
+        <form method="POST">
+            <input class="input" type="text" name="username" placeholder="Логін" required>
+            <input class="input" type="password" name="password" placeholder="Пароль" required>
+
+            <button class="btn" type="submit">Зареєструватися</button>
+        </form>
+
+        <div class="small">
+            Вже є акаунт? <a href="/login">Увійти</a>
+        </div>
+    </div>
+
+</div>
+
+</body>
+</html>
